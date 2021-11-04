@@ -7,7 +7,14 @@
     let
       pkgs = import nixpkgs { inherit system; };
       lib = pkgs.lib;
-      api = lib.evalModules { modules = [ ./schema.nix ./methods/schemaPush.nix ]; };
+
+      methods = builtins.map
+        (fileName: ./. + "/methods/${fileName}")
+        (builtins.attrNames (builtins.readDir ./methods));
+
+      api = lib.evalModules {
+        modules = [ ./schema.nix ] ++ methods;
+      };
     in
     {
       defaultPackage = builtins.trace (builtins.toJSON api.config) pkgs.cowsay;

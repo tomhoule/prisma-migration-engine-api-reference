@@ -10,7 +10,7 @@
       force = { shape = "Bool"; };
     };
     responseShape = {
-      executed_steps = { shape = "U32"; };
+      executedSteps = { shape = "U32"; };
       warnings = { isList = true; shape = "String"; };
       unexecutable = { isList = true; shape = "String"; };
     };

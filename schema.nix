@@ -6,6 +6,10 @@ let
   types = lib.types;
   shape = types.submodule {
     options = {
+      description = lib.mkOption {
+        type = types.str;
+        default = "";
+      };
       isList = lib.mkOption { type = types.bool; default = false; };
       isNullable = lib.mkOption { type = types.bool; default = false; };
       shape = lib.mkOption {

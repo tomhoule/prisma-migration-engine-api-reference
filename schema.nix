@@ -4,6 +4,13 @@ with builtins;
 
 let
   types = lib.types;
+  unionType = types.submodule {
+    options = {
+      taggedUnionOf = lib.mkOption {
+        type = types.attrsOf (types.attrsOf shape);
+      };
+    };
+  };
   shape = types.submodule {
     options = {
       description = lib.mkOption {
@@ -13,7 +20,7 @@ let
       isList = lib.mkOption { type = types.bool; default = false; };
       isNullable = lib.mkOption { type = types.bool; default = false; };
       shape = lib.mkOption {
-        type = types.oneOf [ shape (types.enum [ "String" "U32" "I32" "Bool" ]) ];
+        type = types.oneOf [ unionType shape (types.enum [ "String" "U32" "I32" "Bool" ]) ];
       };
     };
   };

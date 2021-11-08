@@ -21,9 +21,13 @@
         name = "prisma-migration-engine-api";
         builder = "${pkgs.bash}/bin/bash";
         args = [ ./builder.sh ];
-        API_JSON = builtins.toJSON api.config;
-        PATH = builtins.foldl' (acc: pkg: acc + ":${pkg}/bin") "" [ pkgs.coreutils pkgs.jq ];
         system = system;
+
+        API_JSON = builtins.toJSON api.config;
+        PATH = builtins.foldl'
+          (acc: pkg: acc + ":${pkg}/bin")
+          ""
+          [ pkgs.coreutils pkgs.jq ];
       };
       packages = {
         prisma-migration-engine-api-rs = { };

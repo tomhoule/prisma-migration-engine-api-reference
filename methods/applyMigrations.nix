@@ -17,7 +17,6 @@
         appliedMigrationNames = {
           isList = true;
           scalar = "String";
-          fields = { hey = { scalar = "String"; }; };
         };
       };
     };

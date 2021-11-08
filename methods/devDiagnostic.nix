@@ -7,18 +7,22 @@
       action based on the current state of the workspace.
     '';
     requestShape = {
-      migrationsDirectoryPath = { shape = "String"; };
+      fields = {
+        migrationsDirectoryPath = { scalar = "String"; };
+      };
     };
     responseShape = {
-      action = {
-        description = ''
-          The suggested course of action for the CLI.
-        '';
-        shape = {
+      fields = {
+        action = {
+          description = ''
+            The suggested course of action for the CLI.
+          '';
           taggedUnionOf = {
             Reset = {
-              reason = {
-                shape = "String";
+              fields = {
+                reason = {
+                  scalar = "String";
+                };
               };
             };
             CreateMigration = { };

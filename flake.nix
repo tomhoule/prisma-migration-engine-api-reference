@@ -17,7 +17,14 @@
       };
     in
     {
-      defaultPackage = builtins.trace (builtins.toJSON api.config) pkgs.cowsay;
+      defaultPackage = derivation {
+        name = "prisma-migration-engine-api";
+        builder = "${pkgs.bash}/bin/bash";
+        args = [ ./builder.sh ];
+        API_JSON = builtins.toJSON api.config;
+        PATH = builtins.foldl' (acc: pkg: acc + ":${pkg}/bin") "" [ pkgs.coreutils pkgs.jq ];
+        system = system;
+      };
       packages = {
         prisma-migration-engine-api-rs = { };
         prisma-migration-engine-api-ts = { };

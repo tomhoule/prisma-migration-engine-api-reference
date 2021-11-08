@@ -6,13 +6,17 @@
       The command behind `db push`.
     '';
     requestShape = {
-      schema = { shape = "String"; };
-      force = { shape = "Bool"; };
+      fields = {
+        schema = { scalar = "String"; };
+        force = { scalar = "Bool"; };
+      };
     };
     responseShape = {
-      executedSteps = { shape = "U32"; };
-      warnings = { isList = true; shape = "String"; };
-      unexecutable = { isList = true; shape = "String"; };
+      fields = {
+        executedSteps = { scalar = "U32"; };
+        warnings = { isList = true; scalar = "String"; };
+        unexecutable = { isList = true; scalar = "String"; };
+      };
     };
   };
 }

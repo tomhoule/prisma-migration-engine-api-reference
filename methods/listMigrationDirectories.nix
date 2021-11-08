@@ -6,10 +6,14 @@
       It lists the migration directories.
     '';
     requestShape = {
-      migrationsDirectoryPath = "String";
+      fields = {
+        migrationsDirectoryPath = { scalar = "String"; };
+      };
     };
     responseShape = {
-      migrations = { isList = true; shape = "String"; };
+      fields = {
+        migrations = { isList = true; scalar = "String"; };
+      };
     };
   };
 }

@@ -4,26 +4,45 @@ with builtins;
 
 let
   types = lib.types;
-  unionType = types.submodule {
-    options = {
-      taggedUnionOf = lib.mkOption {
-        type = types.attrsOf (types.attrsOf shape);
+  shape =
+    let
+      uncheckedShape = types.submodule {
+        options = {
+          description = lib.mkOption {
+            type = types.str;
+            default = "";
+          };
+
+          isList = lib.mkOption { type = types.bool; default = false; };
+          isNullable = lib.mkOption { type = types.bool; default = false; };
+
+          scalar = lib.mkOption {
+            type = types.nullOr (types.enum [ "String" "U32" "I32" "Bool" ]);
+            default = null;
+          };
+          fields = lib.mkOption {
+            type = types.nullOr (types.attrsOf shape);
+            default = null;
+          };
+          taggedUnionOf = lib.mkOption {
+            type = types.nullOr (types.attrsOf shape);
+            default = null;
+          };
+        };
       };
-    };
-  };
-  shape = types.submodule {
-    options = {
-      description = lib.mkOption {
-        type = types.str;
-        default = "";
-      };
-      isList = lib.mkOption { type = types.bool; default = false; };
-      isNullable = lib.mkOption { type = types.bool; default = false; };
-      shape = lib.mkOption {
-        type = types.oneOf [ unionType shape (types.enum [ "String" "U32" "I32" "Bool" ]) ];
-      };
-    };
-  };
+      checkShape = (shape:
+        let shapeTypeCount = foldl'
+          (acc: name: acc + (if shape."${name}" == null then 0 else 1))
+          0
+          [ "scalar" "fields" "taggedUnionOf" ]; in
+        if trace "hiiiii uwu ${shapeTypeCount}" (shapeTypeCount != 1)
+        then
+          (throw "Exactly one of scalar, fields or taggedUnionOf must be defined")
+        else
+          true
+      );
+    in
+    types.addCheck uncheckedShape checkShape;
 in
 {
   options = {
@@ -35,8 +54,8 @@ in
             description = "Docs for the RPC method";
             type = types.str;
           };
-          requestShape = lib.mkOption { type = types.attrsOf shape; };
-          responseShape = lib.mkOption { type = types.attrsOf shape; };
+          requestShape = lib.mkOption { type = shape; };
+          responseShape = lib.mkOption { type = shape; };
         };
       });
     };

@@ -23,11 +23,13 @@
         args = [ ./builder.sh ];
         system = system;
 
+        src = ./.;
+
         API_JSON = builtins.toJSON api.config;
         PATH = builtins.foldl'
           (acc: pkg: acc + ":${pkg}/bin")
           ""
-          [ pkgs.coreutils pkgs.jq ];
+          [ pkgs.coreutils pkgs.jq pkgs.shab ];
       };
       packages = {
         prisma-migration-engine-api-rs = { };

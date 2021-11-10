@@ -1,0 +1,11 @@
+$(
+  if [[ echo $SHAPE | jq 'has(scalar)' == 'true' ]]; then
+    shab $TEMPLATES_DIR/scalarField.shab
+  elsif [[ echo $SHAPE | jq 'has(fields)' == 'true' ]]; then
+    shab $TEMPLATES_DIR/record.shab
+  elsif [[ echo $SHAPE | jq 'has(taggedUnionOf)' == 'true' ]]; then
+    shab $TEMPLATES_DIR/union.shab
+  else
+    exit 1
+  fi
+)

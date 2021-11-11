@@ -1,15 +1,5 @@
 { ... }:
 
-let
-  migrationFeedback = {
-    description = "A data loss warning or an unexecutable migration error, associated with the step that triggered it.";
-    isList = true;
-    fields = {
-      message = { scalar = "String"; };
-      stepIndeex = { scalar = "U32"; };
-    };
-  };
-in
 {
   methods.evaluateDataLoss = {
     description = ''
@@ -21,17 +11,31 @@ in
 
       This is part of the `migrate dev` flow.
     '';
-    requestShape = {
+    requestShape = "evaluateDataLossInput";
+    responseShape = "evaluateDataLossOutput";
+  };
+
+  recordShapes = {
+    evaluateDataLossInput = {
       fields = {
-        prismaSchema = { scalar = "String"; };
-        migrationsDirectoryPath = { scalar = "String"; };
+        prismaSchema = { shape = "String"; };
+        migrationsDirectoryPath = { shape = "String"; };
       };
     };
-    responseShape = {
+
+    evaluateDataLossOutput = {
       fields = {
-        migrationSteps = { scalar = "U32"; };
-        warnings = migrationFeedback;
-        unexecutable = migrationFeedback;
+        migrationSteps = { shape = "U32"; };
+        warnings = { shape = "migrationFeedback"; isList = true; };
+        unexecutable = { shape = "migrationFeedback"; isList = true; };
+      };
+    };
+
+    migrationFeedback = {
+      description = "A data loss warning or an unexecutable migration error, associated with the step that triggered it.";
+      fields = {
+        message = { shape = "String"; };
+        stepIndex = { shape = "U32"; };
       };
     };
   };

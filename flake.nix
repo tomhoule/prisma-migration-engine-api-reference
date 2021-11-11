@@ -29,11 +29,17 @@
         PATH = builtins.foldl'
           (acc: pkg: acc + ":${pkg}/bin")
           ""
-          [ pkgs.coreutils pkgs.jq pkgs.shab ];
+          [ pkgs.coreutils pkgs.jq pkgs.shab self.packages."${system}".codegen ];
       };
+
       packages = {
-        prisma-migration-engine-api-rs = { };
-        prisma-migration-engine-api-ts = { };
+        codegen = pkgs.rustPlatform.buildRustPackage {
+          name = "migration-engine-api-codegen";
+          src = ./codegen;
+          cargoLock = {
+            lockFile = ./codegen/Cargo.lock;
+          };
+        };
       };
     }
   );

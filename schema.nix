@@ -4,67 +4,102 @@ with builtins;
 
 let
   types = lib.types;
-  shape =
-    let
-      uncheckedShape = types.submodule {
+  enumVariant = types.submoduleWith {
+    shorthandOnlyDefinesConfig = true;
+    modules = [
+      {
+        options = {
+          description = lib.mkOption { type = types.str; default = ""; };
+          shape = lib.mkOption { type = types.str; };
+        };
+      }
+    ];
+  };
+  enumShape = types.submoduleWith {
+    shorthandOnlyDefinesConfig = true;
+    modules = [
+      {
         options = {
           description = lib.mkOption {
             type = types.str;
             default = "";
           };
 
-          isList = lib.mkOption { type = types.bool; default = false; };
-          isNullable = lib.mkOption { type = types.bool; default = false; };
-
-          scalar = lib.mkOption {
-            description = ''
-              A scalar field.
-
-              Exactly one of `scalar`, `fields` or `taggedUnionOf` should be
-              defined.
-            '';
-            type = types.nullOr (types.enum [ "String" "U32" "I32" "Bool" ]);
-            default = null;
-          };
-          fields = lib.mkOption {
-            description = ''
-              A record field.
-
-              Exactly one of `scalar`, `fields` or `taggedUnionOf` should be
-              defined.
-            '';
-            type = types.nullOr (types.attrsOf shape);
-            default = null;
-          };
-          taggedUnionOf = lib.mkOption {
-            description = ''
-              A tagged union field.
-
-              Exactly one of `scalar`, `fields` or `taggedUnionOf` should be
-              defined.
-            '';
-            type = types.nullOr (types.attrsOf shape);
-            default = null;
+          variants = lib.mkOption {
+            type = types.uniq (types.attrsOf (types.nullOr enumVariant));
           };
         };
-      };
-    in
-    types.addCheck uncheckedShape checkShape;
+      }
+    ];
+  };
+  recordField = types.submoduleWith {
+    shorthandOnlyDefinesConfig = true;
+    modules = [
+      {
+        options = {
+          description = lib.mkOption { type = types.str; default = ""; };
+          isList = lib.mkOption {
+            type = types.bool;
+            default = false;
+          };
+          isNullable = lib.mkOption {
+            type = types.bool;
+            default = false;
+          };
+          shape = lib.mkOption { type = types.str; };
+        };
+      }
+    ];
+  };
+  recordShape = types.submoduleWith
+    {
+      shorthandOnlyDefinesConfig = true;
+      modules = [
+        {
+          options = {
+            description = lib.mkOption {
+              type = types.str;
+              default = "";
+            };
+
+            fields = lib.mkOption {
+              type = types.attrsOf recordField;
+            };
+          };
+        }
+      ];
+    };
 in
 {
   options = {
     methods = lib.mkOption {
       description = "A JSON-RPC method";
-      type = types.attrsOf (types.uniq (types.submodule {
-        options = {
-          description = lib.mkOption {
-            description = "Docs for the RPC method";
-            type = types.str;
-          };
-          requestShape = lib.mkOption { type = shape; };
-          responseShape = lib.mkOption { type = shape; };
-        };
-      }));
+      type = types.attrsOf (types.submoduleWith {
+        shorthandOnlyDefinesConfig = true;
+        modules = [
+          {
+            options = {
+              description = lib.mkOption {
+                description = "Docs for the RPC method";
+                type = types.str;
+              };
+              requestShape = lib.mkOption { type = types.str; };
+              responseShape = lib.mkOption { type = types.str; };
+            };
+          }
+        ];
+      });
+    };
+
+    recordShapes = lib.mkOption {
+      description = "The repository of record shapes for the whole API.";
+      type = types.attrsOf recordShape;
+    };
+
+    enumShapes = lib.mkOption {
+      description = "The repository of enum (tagged union) shapes for the whole API.";
+      type = types.attrsOf enumShape;
     };
   };
 }
+

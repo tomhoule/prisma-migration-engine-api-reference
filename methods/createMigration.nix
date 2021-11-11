@@ -5,38 +5,42 @@
     description = ''
       Create the next migration in the migrations history.
     '';
+    requestShape = "createMigrationInput";
+    responseShape = "createMigrationOutput";
+  };
 
-    requestShape = {
+  recordShapes = {
+    createMigrationInput = {
       fields = {
         migrationsDirectoryPath = {
           description = "The filesystem path of the migrations directory to use.";
-          scalar = "String";
+          shape = "String";
         };
 
         prismaSchema = {
           description = "The current prisma schema to use as a target for the generated migration.";
-          scalar = "String";
+          shape = "String";
         };
 
         migrationName = {
           description = "The user-given name for the migration. This will be used in the migration directory.";
-          scalar = "String";
+          shape = "String";
         };
 
         draft = {
           description = "If true, always generate a migration, but do not apply.";
-          scalar = "Bool";
+          shape = "Bool";
         };
       };
 
     };
 
-    responseShape = {
+    createMigrationOutput = {
       fields = {
         generatedMigrationName = {
           description = "The name of the newly generated migration directory, if any.";
           isNullable = true;
-          scalar = "String";
+          shape = "String";
         };
       };
     };

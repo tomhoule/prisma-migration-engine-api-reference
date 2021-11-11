@@ -7,16 +7,22 @@
 
       This is the command behind `prisma migrate deploy`.
     '';
-    requestShape = {
+    requestShape = "applyMigrationsInput";
+    responseShape = "applyMigrationsOutput";
+  };
+
+  recordShapes = {
+    applyMigrationsInput = {
       fields = {
-        migrationsDirectoryPath = { scalar = "String"; };
+        migrationsDirectoryPath = { shape = "String"; };
       };
     };
-    responseShape = {
+
+    applyMigrationsOutput = {
       fields = {
         appliedMigrationNames = {
           isList = true;
-          scalar = "String";
+          shape = "String";
         };
       };
     };

@@ -6,27 +6,45 @@
       Method called at the beginning of `migrate dev` to decide the course of
       action based on the current state of the workspace.
     '';
-    requestShape = {
-      fields = {
-        migrationsDirectoryPath = { scalar = "String"; };
+    requestShape = "devDiagnosticInput";
+    responseShape = "devDiagnosticOutput";
+  };
+
+  enumShapes = {
+    devAction = {
+      variants = {
+        Reset = {
+          shape = "devActionReset";
+        };
+        CreateMigration = null;
       };
     };
-    responseShape = {
+  };
+
+  recordShapes = {
+    devDiagnosticInput = {
+      fields = {
+        migrationsDirectoryPath = {
+          shape = "String";
+        };
+      };
+    };
+
+    devActionReset = {
+      fields = {
+        reason = {
+          shape = "String";
+        };
+      };
+    };
+
+    devDiagnosticOutput = {
       fields = {
         action = {
           description = ''
             The suggested course of action for the CLI.
           '';
-          taggedUnionOf = {
-            Reset = {
-              fields = {
-                reason = {
-                  scalar = "String";
-                };
-              };
-            };
-            CreateMigration = { };
-          };
+          shape = "devAction";
         };
       };
     };

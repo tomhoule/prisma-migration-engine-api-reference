@@ -5,14 +5,19 @@
     description = ''
       It lists the migration directories.
     '';
-    requestShape = {
+    requestShape = "listMigrationDirectoriesInput";
+    responseShape = "listMigrationDirectoriesOutput";
+  };
+
+  recordShapes = {
+    listMigrationDirectoriesInput = {
       fields = {
-        migrationsDirectoryPath = { scalar = "String"; };
+        migrationsDirectoryPath = { shape = "String"; };
       };
     };
-    responseShape = {
+    listMigrationDirectoriesOutput = {
       fields = {
-        migrations = { isList = true; scalar = "String"; };
+        migrations = { isList = true; shape = "String"; };
       };
     };
   };

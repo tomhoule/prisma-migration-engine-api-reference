@@ -5,17 +5,23 @@
     description = ''
       The command behind `db push`.
     '';
-    requestShape = {
+    requestShape = "schemaPushInput";
+    responseShape = "schemaPushOutput";
+  };
+
+  recordShapes = {
+    schemaPushInput = {
       fields = {
-        schema = { scalar = "String"; };
-        force = { scalar = "Bool"; };
+        schema = { shape = "String"; };
+        force = { shape = "Bool"; };
       };
     };
-    responseShape = {
+
+    schemaPushOutput = {
       fields = {
-        executedSteps = { scalar = "U32"; };
-        warnings = { isList = true; scalar = "String"; };
-        unexecutable = { isList = true; scalar = "String"; };
+        executedSteps = { shape = "U32"; };
+        warnings = { isList = true; shape = "String"; };
+        unexecutable = { isList = true; shape = "String"; };
       };
     };
   };

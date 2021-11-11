@@ -8,48 +8,64 @@
       engine only reads, it does not write to the database nor the migrations
       directory, nor does it use a shadow database.
     '';
-    requestShape = {
-      migrationsDirectoryPath = {
-        description = "The path to the root of the migrations directory.";
-        scalar = "String";
+    requestShape = "diagnoseMigrationHistoryInput";
+    responseShape = "diagnoseMigrationHistoryOutput";
+  };
+
+  enumShapes = {
+    historyOutput = {
+      variants = {
+        DatabaseIsBehind = null;
+        MigrationsDirectoryIsBehind = null;
+        HistoriesDiverge = null;
       };
     };
-    responseShape = {
-      history = {
-        description = ''
-          The current status of the migration history of the database relative to
-          migrations directory. `None` if they are in sync and up to date.
-        '';
+  };
 
-        isNullable = true;
-        taggedUnionOf = {
-          DatabaseIsBehind = { };
-          MigrationsDirectoryIsBehind = { };
-          HistoriesDiverge = { };
+  recordShapes = {
+    diagnoseMigrationHistoryInput = {
+      fields = {
+        migrationsDirectoryPath = {
+          description = "The path to the root of the migrations directory.";
+          shape = "String";
         };
       };
-      failedMigrationNames = {
-        description = ''
-          The names of the migrations that are currently in a failed state in
-          the database.
-        '';
+    };
 
-        isList = true;
-        scalar = "String";
-      };
-      editedMigrationNames = {
-        description = ''
-          The names of the migrations for which the checksum of the script in the
-          migration directory does not match the checksum of the applied migration
-          in the database.
-        '';
+    diagnoseMigrationHistoryOutput = {
+      fields = {
+        history = {
+          description = ''
+            The current status of the migration history of the database relative to
+            migrations directory. `None` if they are in sync and up to date.
+          '';
 
-        isList = true;
-        scalar = "String";
-      };
-      hasMigrationsTable = {
-        description = "Is the migrations table initialized in the database?";
-        scalar = "Boolean";
+          isNullable = true;
+          shape = "historyOutput";
+        };
+        failedMigrationNames = {
+          description = ''
+            The names of the migrations that are currently in a failed state in
+            the database.
+          '';
+
+          isList = true;
+          shape = "String";
+        };
+        editedMigrationNames = {
+          description = ''
+            The names of the migrations for which the checksum of the script in the
+            migration directory does not match the checksum of the applied migration
+            in the database.
+          '';
+
+          isList = true;
+          shape = "String";
+        };
+        hasMigrationsTable = {
+          description = "Is the migrations table initialized in the database?";
+          shape = "Bool";
+        };
       };
     };
   };

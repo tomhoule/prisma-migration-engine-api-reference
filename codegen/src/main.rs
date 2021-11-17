@@ -29,6 +29,22 @@ fn main() {
     }
 
     writeln!(librs, "];").unwrap();
+
+    let typesrs = out_dir.join("types.rs");
+    let mut typesrs = File::create(&typesrs).unwrap();
+
+    for (type_name, record_type) in &api.record_shapes {
+        writeln!(typesrs, "struct {} {{", type_name).unwrap();
+        for (field_name, field) in &record_type.fields {
+            let type_name = match field.shape.as_str() {
+                "U32" => "u32",
+                other => other,
+            };
+
+            writeln!(typesrs, "    {}: {},", field_name, type_name).unwrap();
+        }
+        writeln!(typesrs, "}}").unwrap();
+    }
 }
 
 // fn is_builtin_scalar(shape: &str) -> bool {

@@ -52,6 +52,12 @@ fn generate_rust_crate(out_dir: &Path, api: &Api) {
 }
 
 fn generate_md_docs(out_dir: &Path, api: &Api) {
+    let engine_methods_out_dir = out_dir.join("engine-methods");
+    std::fs::create_dir(&engine_methods_out_dir).unwrap();
+    generate_engine_method_docs(&engine_methods_out_dir, api);
+}
+
+fn generate_engine_method_docs(out_dir: &Path, api: &Api) {
     let mut md_contents = String::with_capacity(1000);
     let mut file_name = String::with_capacity(50);
 

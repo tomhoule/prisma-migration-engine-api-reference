@@ -45,7 +45,7 @@
       apps = {
         publishMdDocs = pkgs.writeShellScriptBin "publishMdDocs" ''
           nix build
-          cp -r ./result/md_docs ./api-docs
+          cp --no-preserve xattr -r ./result/md_docs ./api-docs
         '';
       };
     }

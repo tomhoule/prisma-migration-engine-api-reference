@@ -7,38 +7,19 @@ directory, nor does it use a shadow database.
 
 
 
-## Input type
+## Request shape
 
-diagnoseMigrationHistoryInput
+Name: diagnoseMigrationHistoryInput
 
 ### migrationsDirectoryPath: String
 
 The path to the root of the migrations directory.
 
-## Output type
+## Response shape
 
-diagnoseMigrationHistoryOutput
+Name: diagnoseMigrationHistoryOutput
 
-### history: historyOutput
+### migrationsDirectoryPath: String
 
-The current status of the migration history of the database relative to
-migrations directory. `None` if they are in sync and up to date.
-
-
-### hasMigrationsTable: Bool
-
-Is the migrations table initialized in the database?
-
-### editedMigrationNames: String
-
-The names of the migrations for which the checksum of the script in the
-migration directory does not match the checksum of the applied migration
-in the database.
-
-
-### failedMigrationNames: String
-
-The names of the migrations that are currently in a failed state in
-the database.
-
+The path to the root of the migrations directory.
 

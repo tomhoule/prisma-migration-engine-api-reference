@@ -13,31 +13,27 @@ history.
 
 
 
-## Input type
+## Request shape
 
-evaluateDataLossInput
-
-### prismaSchema: String
-
-
+Name: evaluateDataLossInput
 
 ### migrationsDirectoryPath: String
 
 
 
-## Output type
-
-evaluateDataLossOutput
-
-### migrationSteps: U32
+### prismaSchema: String
 
 
 
-### warnings: migrationFeedback
+## Response shape
+
+Name: evaluateDataLossOutput
+
+### migrationsDirectoryPath: String
 
 
 
-### unexecutable: migrationFeedback
+### prismaSchema: String
 
 
 

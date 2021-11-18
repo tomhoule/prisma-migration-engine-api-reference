@@ -5,15 +5,19 @@ there, but ignored for all purposes except as audit trail.
 
 
 
-## Input type
+## Request shape
 
-markMigrationRolledBackInput
+Name: markMigrationRolledBackInput
 
 ### migrationName: String
 
 The name of the migration to mark applied.
 
-## Output type
+## Response shape
 
-markMigrationRolledBackOutput
+Name: markMigrationRolledBackOutput
+
+### migrationName: String
+
+The name of the migration to mark applied.
 

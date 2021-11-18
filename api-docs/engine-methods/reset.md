@@ -5,11 +5,11 @@ Drop and recreate the database. The migrations will not be applied, as it would 
 
 
 
-## Input type
+## Request shape
 
-resetInput
+Name: resetInput
 
-## Output type
+## Response shape
 
-resetOutput
+Name: resetOutput
 

@@ -4,9 +4,9 @@ The command behind `db push`.
 
 
 
-## Input type
+## Request shape
 
-schemaPushInput
+Name: schemaPushInput
 
 ### force: Bool
 
@@ -16,19 +16,15 @@ schemaPushInput
 
 
 
-## Output type
+## Response shape
 
-schemaPushOutput
+Name: schemaPushOutput
 
-### warnings: String
-
-
-
-### unexecutable: String
+### force: Bool
 
 
 
-### executedSteps: U32
+### schema: String
 
 
 

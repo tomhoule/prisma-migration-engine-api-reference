@@ -4,11 +4,11 @@ Make the migration engine panic. Only useful to test client error handling.
 
 
 
-## Input type
+## Request shape
 
-debugPanicInput
+Name: debugPanicInput
 
-## Output type
+## Response shape
 
-debugPanicOutput
+Name: debugPanicOutput
 

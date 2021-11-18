@@ -4,15 +4,11 @@ Get the database version for error reporting.
 
 
 
-## Input type
+## Request shape
 
-getDatabaseVersionInput
+Name: getDatabaseVersionInput
 
-## Output type
+## Response shape
 
-getDatabaseVersionOutput
-
-### version: String
-
-
+Name: getDatabaseVersionOutput
 

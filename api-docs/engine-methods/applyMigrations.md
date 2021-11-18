@@ -6,19 +6,19 @@ This is the command behind `prisma migrate deploy`.
 
 
 
-## Input type
+## Request shape
 
-applyMigrationsInput
+Name: applyMigrationsInput
 
 ### migrationsDirectoryPath: String
 
 
 
-## Output type
+## Response shape
 
-applyMigrationsOutput
+Name: applyMigrationsOutput
 
-### appliedMigrationNames: String
+### migrationsDirectoryPath: String
 
 
 

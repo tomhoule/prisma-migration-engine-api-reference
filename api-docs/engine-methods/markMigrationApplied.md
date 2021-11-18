@@ -12,9 +12,9 @@ as rolled back, then create a new entry.
 
 
 
-## Input type
+## Request shape
 
-markMigrationAppliedInput
+Name: markMigrationAppliedInput
 
 ### migrationName: String
 
@@ -24,7 +24,15 @@ The name of the migration to mark applied.
 
 The path to the root of the migrations directory.
 
-## Output type
+## Response shape
 
-markMigrationAppliedOutput
+Name: markMigrationAppliedOutput
+
+### migrationName: String
+
+The name of the migration to mark applied.
+
+### migrationsDirectoryPath: String
+
+The path to the root of the migrations directory.
 

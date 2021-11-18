@@ -1,0 +1,5 @@
+# listMigrationDirectoriesInput
+### migrationsDirectoryPath: String
+
+
+

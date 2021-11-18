@@ -4,19 +4,19 @@ List the names of the migrations in the migrations directory.
 
 
 
-## Input type
+## Request shape
 
-listMigrationDirectoriesInput
+Name: listMigrationDirectoriesInput
 
 ### migrationsDirectoryPath: String
 
 
 
-## Output type
+## Response shape
 
-listMigrationDirectoriesOutput
+Name: listMigrationDirectoriesOutput
 
-### migrations: String
+### migrationsDirectoryPath: String
 
 
 

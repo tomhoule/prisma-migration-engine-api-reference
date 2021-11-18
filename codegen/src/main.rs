@@ -1,5 +1,7 @@
+mod markdown;
+
 use serde::Deserialize;
-use std::{collections::HashMap, fmt::Write as _, fs::File, io::Write as _, path::Path};
+use std::{collections::{BTreeMap, HashMap}, fmt::Write as _, fs::File, io::Write as _, path::Path};
 
 fn main() {
     let out_dir = std::env::var("out").expect("Expected the $out env var to be defined");
@@ -13,7 +15,7 @@ fn main() {
     std::fs::create_dir(&rust_crate_out_dir).unwrap();
     std::fs::create_dir(&md_docs_out_dir).unwrap();
     generate_rust_crate(&rust_crate_out_dir, &api);
-    generate_md_docs(&md_docs_out_dir, &api);
+    markdown::generate_md_docs(&md_docs_out_dir, &api);
 }
 
 fn generate_rust_crate(out_dir: &Path, api: &Api) {
@@ -51,73 +53,6 @@ fn generate_rust_crate(out_dir: &Path, api: &Api) {
     }
 }
 
-fn generate_md_docs(out_dir: &Path, api: &Api) {
-    let engine_methods_out_dir = out_dir.join("engine-methods");
-    std::fs::create_dir(&engine_methods_out_dir).unwrap();
-    generate_engine_method_docs(&engine_methods_out_dir, api);
-}
-
-fn generate_engine_method_docs(out_dir: &Path, api: &Api) {
-    let mut md_contents = String::with_capacity(1000);
-    let mut file_name = String::with_capacity(50);
-
-    for (method_name, method) in &api.methods {
-        let description = method
-            .description
-            .as_ref()
-            .map(String::as_str)
-            .unwrap_or("");
-
-        writeln!(
-            md_contents,
-            "# {method_name}\n\n{description}\n\n",
-            method_name = method_name,
-            description = description,
-        )
-        .unwrap();
-
-        writeln!(
-            md_contents,
-            "## Input type\n\n{input_type}\n",
-            input_type = method.request_shape,
-        )
-        .unwrap();
-
-        let render_fields = |shape: &RecordShape, md_contents: &mut String| {
-            for (field_name, field) in &shape.fields {
-                let description = field.description.as_ref().map(String::as_str).unwrap_or("");
-                writeln!(
-                    md_contents,
-                    "### {}: {}\n\n{}\n",
-                    field_name, field.shape, description
-                );
-            }
-        };
-
-        let input_shape = &api.record_shapes[&method.request_shape];
-
-        render_fields(input_shape, &mut md_contents);
-
-        writeln!(
-            md_contents,
-            "## Output type\n\n{output_type}\n",
-            output_type = method.response_shape,
-        )
-        .unwrap();
-
-        let output_shape = &api.record_shapes[&method.response_shape];
-
-        render_fields(output_shape, &mut md_contents);
-
-        file_name.push_str(method_name);
-        file_name.push_str(".md");
-        let mut file = File::create(out_dir.join(&file_name)).unwrap();
-        file.write_all(md_contents.as_bytes()).unwrap();
-        md_contents.clear();
-        file_name.clear();
-    }
-}
-
 // fn is_builtin_scalar(shape: &str) -> bool {
 //     ["String", "U32", "I32", "Boolean"].contains(&shape)
 // }
@@ -134,7 +69,7 @@ struct Api {
 #[derive(Debug, Deserialize)]
 struct RecordShape {
     description: Option<String>,
-    fields: HashMap<String, RecordField>,
+    fields: BTreeMap<String, RecordField>,
 }
 
 #[derive(Debug, Deserialize)]

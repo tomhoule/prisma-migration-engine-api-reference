@@ -1,0 +1,5 @@
+# listMigrationDirectoriesOutput
+### migrations: String
+
+
+

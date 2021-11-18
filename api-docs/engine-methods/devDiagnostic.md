@@ -8,20 +8,19 @@ output, and translate it to a concrete action to be performed by the CLI.
 
 
 
-## Input type
+## Request shape
 
-devDiagnosticInput
+Name: devDiagnosticInput
 
 ### migrationsDirectoryPath: String
 
 
 
-## Output type
+## Response shape
 
-devDiagnosticOutput
+Name: devDiagnosticOutput
 
-### action: devAction
+### migrationsDirectoryPath: String
 
-The suggested course of action for the CLI.
 
 

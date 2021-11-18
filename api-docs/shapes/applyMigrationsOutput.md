@@ -1,0 +1,5 @@
+# applyMigrationsOutput
+### appliedMigrationNames: String
+
+
+

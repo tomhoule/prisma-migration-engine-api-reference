@@ -12,7 +12,7 @@ output, and translate it to a concrete action to be performed by the CLI.
 
 Name: devDiagnosticInput
 
-### migrationsDirectoryPath: String
+- migrationsDirectoryPath: [String](../shapes/String.md)
 
 
 
@@ -20,7 +20,7 @@ Name: devDiagnosticInput
 
 Name: devDiagnosticOutput
 
-### migrationsDirectoryPath: String
+- migrationsDirectoryPath: [String](../shapes/String.md)
 
 
 

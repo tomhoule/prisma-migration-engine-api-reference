@@ -11,15 +11,15 @@ directory, nor does it use a shadow database.
 
 Name: diagnoseMigrationHistoryInput
 
-### migrationsDirectoryPath: String
+- migrationsDirectoryPath: [String](../shapes/String.md)
 
-The path to the root of the migrations directory.
+  The path to the root of the migrations directory.
 
 ## Response shape
 
 Name: diagnoseMigrationHistoryOutput
 
-### migrationsDirectoryPath: String
+- migrationsDirectoryPath: [String](../shapes/String.md)
 
-The path to the root of the migrations directory.
+  The path to the root of the migrations directory.
 

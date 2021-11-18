@@ -1,7 +1,12 @@
 mod markdown;
 
 use serde::Deserialize;
-use std::{collections::{BTreeMap, HashMap}, fmt::Write as _, fs::File, io::Write as _, path::Path};
+use std::{
+    collections::{BTreeMap, HashMap},
+    fs::File,
+    io::Write as _,
+    path::Path,
+};
 
 fn main() {
     let out_dir = std::env::var("out").expect("Expected the $out env var to be defined");

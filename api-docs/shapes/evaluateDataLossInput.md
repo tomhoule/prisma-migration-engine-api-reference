@@ -1,9 +1,9 @@
 # evaluateDataLossInput
-### migrationsDirectoryPath: String
+- migrationsDirectoryPath: [String](../shapes/String.md)
 
 
 
-### prismaSchema: String
+- prismaSchema: [String](../shapes/String.md)
 
 
 

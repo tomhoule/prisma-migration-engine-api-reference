@@ -1,13 +1,13 @@
 # schemaPushOutput
-### executedSteps: U32
+- executedSteps: [U32](../shapes/U32.md)
 
 
 
-### unexecutable: String
+- unexecutable: [String](../shapes/String.md)
 
 
 
-### warnings: String
+- warnings: [String](../shapes/String.md)
 
 
 

@@ -1,9 +1,9 @@
 # schemaPushInput
-### force: Bool
+- force: [Bool](../shapes/Bool.md)
 
 
 
-### schema: String
+- schema: [String](../shapes/String.md)
 
 
 

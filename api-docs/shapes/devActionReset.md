@@ -1,5 +1,5 @@
 # devActionReset
-### reason: String
+- reason: [String](../shapes/String.md)
 
 
 

@@ -1,5 +1,5 @@
 # diagnoseMigrationHistoryInput
-### migrationsDirectoryPath: String
+- migrationsDirectoryPath: [String](../shapes/String.md)
 
-The path to the root of the migrations directory.
+  The path to the root of the migrations directory.
 

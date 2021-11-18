@@ -9,15 +9,15 @@ there, but ignored for all purposes except as audit trail.
 
 Name: markMigrationRolledBackInput
 
-### migrationName: String
+- migrationName: [String](../shapes/String.md)
 
-The name of the migration to mark applied.
+  The name of the migration to mark applied.
 
 ## Response shape
 
 Name: markMigrationRolledBackOutput
 
-### migrationName: String
+- migrationName: [String](../shapes/String.md)
 
-The name of the migration to mark applied.
+  The name of the migration to mark applied.
 

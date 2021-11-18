@@ -1,6 +1,5 @@
 # devDiagnosticOutput
-### action: devAction
+- action: [devAction](../shapes/devAction.md)
 
-The suggested course of action for the CLI.
-
+  The suggested course of action for the CLI.
 

@@ -88,12 +88,20 @@ fn generate_shape_docs(out_dir: &Path, api: &Api) {
 
 fn render_record_fields(shape: &RecordShape, md_contents: &mut String, api: &Api) {
     for (field_name, field) in &shape.fields {
-        let description = field.description.as_ref().map(String::as_str).unwrap_or("");
         writeln!(
             md_contents,
-            "### {}: {}\n\n{}\n",
-            field_name, field.shape, description
+            "- {}: [{}](../shapes/{}.md)\n",
+            field_name, field.shape, field.shape
         )
         .unwrap();
+
+        if let Some(description) = &field.description {
+            for line in description.lines() {
+                md_contents.push_str("  ");
+                md_contents.push_str(line);
+            }
+        }
+
+        md_contents.push_str("\n\n");
     }
 }

@@ -1,5 +1,5 @@
 # listMigrationDirectoriesOutput
-### migrations: String
+- migrations: [String](../shapes/String.md)
 
 
 

@@ -1,13 +1,13 @@
 # evaluateDataLossOutput
-### migrationSteps: U32
+- migrationSteps: [U32](../shapes/U32.md)
 
 
 
-### unexecutable: migrationFeedback
+- unexecutable: [migrationFeedback](../shapes/migrationFeedback.md)
 
 
 
-### warnings: migrationFeedback
+- warnings: [migrationFeedback](../shapes/migrationFeedback.md)
 
 
 

@@ -1,5 +1,5 @@
 # getDatabaseVersionOutput
-### version: String
+- version: [String](../shapes/String.md)
 
 
 

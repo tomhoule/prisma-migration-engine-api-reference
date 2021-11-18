@@ -1,5 +1,5 @@
 # devDiagnosticInput
-### migrationsDirectoryPath: String
+- migrationsDirectoryPath: [String](../shapes/String.md)
 
 
 

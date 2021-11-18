@@ -1,5 +1,5 @@
 # markMigrationRolledBackInput
-### migrationName: String
+- migrationName: [String](../shapes/String.md)
 
-The name of the migration to mark applied.
+  The name of the migration to mark applied.
 

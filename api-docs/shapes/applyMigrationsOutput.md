@@ -1,5 +1,5 @@
 # applyMigrationsOutput
-### appliedMigrationNames: String
+- appliedMigrationNames: [String](../shapes/String.md)
 
 
 

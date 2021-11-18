@@ -8,11 +8,11 @@ The command behind `db push`.
 
 Name: schemaPushInput
 
-### force: Bool
+- force: [Bool](../shapes/Bool.md)
 
 
 
-### schema: String
+- schema: [String](../shapes/String.md)
 
 
 
@@ -20,11 +20,11 @@ Name: schemaPushInput
 
 Name: schemaPushOutput
 
-### force: Bool
+- force: [Bool](../shapes/Bool.md)
 
 
 
-### schema: String
+- schema: [String](../shapes/String.md)
 
 
 

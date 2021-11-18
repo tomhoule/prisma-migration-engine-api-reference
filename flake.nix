@@ -44,6 +44,8 @@
 
       apps = {
         publishMdDocs = pkgs.writeShellScriptBin "publishMdDocs" ''
+          set -euo pipefail
+
           nix build
           ${pkgs.rsync}/bin/rsync --progress --verbose --recursive --delete ./result/md_docs/ ./api-docs
         '';

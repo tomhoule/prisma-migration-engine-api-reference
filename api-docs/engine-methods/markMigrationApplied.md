@@ -9,3 +9,22 @@ as rolled back, then create a new entry.
 - The migration is not in the table. We will create a new entry in the migrations table. The
 `started_at` and `finished_at` will be the same.
 - If it is already applied, we return a user-facing error.
+
+
+
+## Input type
+
+markMigrationAppliedInput
+
+### migrationName: String
+
+The name of the migration to mark applied.
+
+### migrationsDirectoryPath: String
+
+The path to the root of the migrations directory.
+
+## Output type
+
+markMigrationAppliedOutput
+

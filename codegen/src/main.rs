@@ -62,15 +62,52 @@ fn generate_engine_method_docs(out_dir: &Path, api: &Api) {
     let mut file_name = String::with_capacity(50);
 
     for (method_name, method) in &api.methods {
-        writeln!(md_contents, "# {}\n", method_name);
+        let description = method
+            .description
+            .as_ref()
+            .map(String::as_str)
+            .unwrap_or("");
 
-        md_contents.push_str(
-            method
-                .description
-                .as_ref()
-                .map(String::as_str)
-                .unwrap_or(""),
-        );
+        writeln!(
+            md_contents,
+            "# {method_name}\n\n{description}\n\n",
+            method_name = method_name,
+            description = description,
+        )
+        .unwrap();
+
+        writeln!(
+            md_contents,
+            "## Input type\n\n{input_type}\n",
+            input_type = method.request_shape,
+        )
+        .unwrap();
+
+        let render_fields = |shape: &RecordShape, md_contents: &mut String| {
+            for (field_name, field) in &shape.fields {
+                let description = field.description.as_ref().map(String::as_str).unwrap_or("");
+                writeln!(
+                    md_contents,
+                    "### {}: {}\n\n{}\n",
+                    field_name, field.shape, description
+                );
+            }
+        };
+
+        let input_shape = &api.record_shapes[&method.request_shape];
+
+        render_fields(input_shape, &mut md_contents);
+
+        writeln!(
+            md_contents,
+            "## Output type\n\n{output_type}\n",
+            output_type = method.response_shape,
+        )
+        .unwrap();
+
+        let output_shape = &api.record_shapes[&method.response_shape];
+
+        render_fields(output_shape, &mut md_contents);
 
         file_name.push_str(method_name);
         file_name.push_str(".md");

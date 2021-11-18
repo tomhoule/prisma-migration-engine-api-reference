@@ -10,3 +10,34 @@ This is part of the `migrate dev` flow.
 
 **Note**: the engine currently assumes the main database schema is up-to-date with the migration
 history.
+
+
+
+## Input type
+
+evaluateDataLossInput
+
+### prismaSchema: String
+
+
+
+### migrationsDirectoryPath: String
+
+
+
+## Output type
+
+evaluateDataLossOutput
+
+### migrationSteps: U32
+
+
+
+### warnings: migrationFeedback
+
+
+
+### unexecutable: migrationFeedback
+
+
+

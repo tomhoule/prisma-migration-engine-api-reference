@@ -1,3 +1,3 @@
 # listMigrationDirectories
 
-It lists the migration directories.
+List the names of the migrations in the migrations directory.

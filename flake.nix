@@ -45,7 +45,7 @@
       apps = {
         publishMdDocs = pkgs.writeShellScriptBin "publishMdDocs" ''
           nix build
-          cp --no-preserve xattr -r ./result/md_docs ./api-docs
+          ${pkgs.rsync}/bin/rsync --progress --verbose --recursive --delete ./result/md_docs/ ./api-docs
         '';
       };
     }

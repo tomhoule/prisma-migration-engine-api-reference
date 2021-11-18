@@ -1,3 +1,4 @@
 # markMigrationRolledBack
 
-Mark a migration as applied in the migrations table.
+Mark an existing failed migration as rolled back in the migrations table. It will still be
+there, but ignored for all purposes except as audit trail.

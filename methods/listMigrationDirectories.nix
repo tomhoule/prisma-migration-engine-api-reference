@@ -3,7 +3,7 @@
 {
   methods.listMigrationDirectories = {
     description = ''
-      It lists the migration directories.
+      List the names of the migrations in the migrations directory.
     '';
     requestShape = "listMigrationDirectoriesInput";
     responseShape = "listMigrationDirectoriesOutput";

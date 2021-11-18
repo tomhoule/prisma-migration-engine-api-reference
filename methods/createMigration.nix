@@ -27,7 +27,7 @@
         };
 
         migrationName = {
-          description = "The user-given name for the migration. This will be used in the migration directory.";
+          description = "The user-given name for the migration. This will be used for the migration directory.";
           shape = "String";
         };
 
@@ -42,7 +42,13 @@
     createMigrationOutput = {
       fields = {
         generatedMigrationName = {
-          description = "The name of the newly generated migration directory, if any.";
+          description = ''
+            The name of the newly generated migration directory, if any.
+
+            generatedMigrationName will be null if: 1. The migration we generate would be empty,
+            AND 2. the `draft` param was not true, because in that case the engine would
+            still generate an empty migration script.
+          '';
           isNullable = true;
           shape = "String";
         };

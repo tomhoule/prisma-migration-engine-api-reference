@@ -28,9 +28,31 @@
 
     evaluateDataLossOutput = {
       fields = {
-        migrationSteps = { shape = "U32"; };
-        warnings = { shape = "migrationFeedback"; isList = true; };
-        unexecutable = { shape = "migrationFeedback"; isList = true; };
+        migrationSteps = {
+          shape = "U32";
+          description = ''
+            The number migration steps that would be generated. If this is empty, we
+            wouldn't generate a new migration, unless the `draft` option is
+            passed.
+          '';
+        };
+        warnings = {
+          description = ''
+            Destructive change warnings for the local database. These are the
+            warnings *for the migration that would be generated*. This does not
+            include other potentially yet unapplied migrations.
+          '';
+          shape = "migrationFeedback";
+          isList = true;
+        };
+        unexecutable = {
+          description = ''
+            Steps that cannot be executed on the local database in the
+            migration that would be generated.
+          '';
+          shape = "migrationFeedback";
+          isList = true;
+        };
       };
     };
 

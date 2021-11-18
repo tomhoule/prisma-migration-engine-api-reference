@@ -49,7 +49,7 @@ fn generate_engine_method_docs(out_dir: &Path, api: &Api) {
 
         let output_shape = &api.record_shapes[&method.response_shape];
 
-        render_record_fields(input_shape, &mut md_contents, api);
+        render_record_fields(output_shape, &mut md_contents, api);
 
         file_name.push_str(method_name);
         file_name.push_str(".md");
@@ -99,6 +99,7 @@ fn render_record_fields(shape: &RecordShape, md_contents: &mut String, api: &Api
             for line in description.lines() {
                 md_contents.push_str("  ");
                 md_contents.push_str(line);
+                md_contents.push('\n');
             }
         }
 

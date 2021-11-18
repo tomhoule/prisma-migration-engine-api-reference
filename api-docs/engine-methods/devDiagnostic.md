@@ -20,7 +20,8 @@ Name: devDiagnosticInput
 
 Name: devDiagnosticOutput
 
-- migrationsDirectoryPath: [String](../shapes/String.md)
+- action: [devAction](../shapes/devAction.md)
 
+  The suggested course of action for the CLI.
 
 

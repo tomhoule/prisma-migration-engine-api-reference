@@ -20,11 +20,15 @@ Name: schemaPushInput
 
 Name: schemaPushOutput
 
-- force: [Bool](../shapes/Bool.md)
+- executedSteps: [U32](../shapes/U32.md)
 
 
 
-- schema: [String](../shapes/String.md)
+- unexecutable: [String](../shapes/String.md)
+
+
+
+- warnings: [String](../shapes/String.md)
 
 
 

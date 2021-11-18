@@ -13,11 +13,8 @@ Name: markMigrationRolledBackInput
 
   The name of the migration to mark applied.
 
+
 ## Response shape
 
 Name: markMigrationRolledBackOutput
-
-- migrationName: [String](../shapes/String.md)
-
-  The name of the migration to mark applied.
 

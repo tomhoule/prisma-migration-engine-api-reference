@@ -36,8 +36,9 @@
       fields = {
         history = {
           description = ''
-            The current status of the migration history of the database relative to
-            migrations directory. `None` if they are in sync and up to date.
+            The current status of the migration history of the database
+            relative to migrations directory. `null` if they are in sync and up
+            to date.
           '';
 
           isNullable = true;
@@ -46,7 +47,7 @@
         failedMigrationNames = {
           description = ''
             The names of the migrations that are currently in a failed state in
-            the database.
+            the migrations table.
           '';
 
           isList = true;
@@ -63,7 +64,7 @@
           shape = "String";
         };
         hasMigrationsTable = {
-          description = "Is the migrations table initialized in the database?";
+          description = "Is the migrations table initialized/present in the database?";
           shape = "Bool";
         };
       };

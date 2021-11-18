@@ -16,7 +16,7 @@ Name: listMigrationDirectoriesInput
 
 Name: listMigrationDirectoriesOutput
 
-- migrationsDirectoryPath: [String](../shapes/String.md)
+- migrations: [String](../shapes/String.md)
 
 
 

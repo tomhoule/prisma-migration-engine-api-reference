@@ -18,7 +18,7 @@ Name: applyMigrationsInput
 
 Name: applyMigrationsOutput
 
-- migrationsDirectoryPath: [String](../shapes/String.md)
+- appliedMigrationNames: [String](../shapes/String.md)
 
 
 

@@ -12,3 +12,7 @@ Name: getDatabaseVersionInput
 
 Name: getDatabaseVersionOutput
 
+- version: [String](../shapes/String.md)
+
+
+

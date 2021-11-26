@@ -13,9 +13,19 @@
   };
 
   enumShapes = {
-    historyOutput = {
+    HistoryDiagnostic = {
+      description = ''
+        A diagnostic returned by `diagnoseMigrationHistory` when looking at the
+        database migration history in relation to the migrations directory.
+      '';
       variants = {
-        DatabaseIsBehind = null;
+        DatabaseIsBehind = {
+          description = ''
+            There are migrations in the migrations directory that have not been
+            applied to the database yet.
+          '';
+          shape = "DatabaseIsBehindFields";
+        };
         MigrationsDirectoryIsBehind = null;
         HistoriesDiverge = null;
       };
@@ -42,7 +52,7 @@
           '';
 
           isNullable = true;
-          shape = "historyOutput";
+          shape = "HistoryDiagnostic";
         };
         failedMigrationNames = {
           description = ''

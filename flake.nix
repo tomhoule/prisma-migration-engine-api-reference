@@ -42,6 +42,8 @@
         };
       };
 
+      devShell = pkgs.mkShell { buildInputs = with pkgs; [ clang ]; };
+
       apps = {
         publishMdDocs = pkgs.writeShellScriptBin "publishMdDocs" ''
           set -euo pipefail

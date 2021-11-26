@@ -17,7 +17,7 @@
   Is the migrations table initialized/present in the database?
 
 
-- history: [historyOutput](../shapes/historyOutput.md)
+- history: [HistoryDiagnostic](../shapes/HistoryDiagnostic.md)
 
   The current status of the migration history of the database
   relative to migrations directory. `null` if they are in sync and up

@@ -8,6 +8,7 @@ The command behind `db push`.
 
 Name: schemaPushInput
 
+
 - force: [Bool](../shapes/Bool.md)
 
 
@@ -19,6 +20,7 @@ Name: schemaPushInput
 ## Response shape
 
 Name: schemaPushOutput
+
 
 - executedSteps: [U32](../shapes/U32.md)
 

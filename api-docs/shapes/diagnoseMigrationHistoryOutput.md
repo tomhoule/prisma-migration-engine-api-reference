@@ -1,4 +1,5 @@
 # diagnoseMigrationHistoryOutput
+
 - editedMigrationNames: [String](../shapes/String.md)
 
   The names of the migrations for which the checksum of the script in the

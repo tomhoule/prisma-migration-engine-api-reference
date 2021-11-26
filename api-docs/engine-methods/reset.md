@@ -14,7 +14,11 @@ Drop and recreate the database. The migrations will not be applied, as it would 
 
 Name: resetInput
 
+
+_This record shape has no fields._
 ## Response shape
 
 Name: resetOutput
 
+
+_This record shape has no fields._

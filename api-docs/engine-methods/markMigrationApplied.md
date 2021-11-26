@@ -16,6 +16,7 @@ as rolled back, then create a new entry.
 
 Name: markMigrationAppliedInput
 
+
 - migrationName: [String](../shapes/String.md)
 
   The name of the migration to mark applied.
@@ -30,3 +31,5 @@ Name: markMigrationAppliedInput
 
 Name: markMigrationAppliedOutput
 
+
+_This record shape has no fields._

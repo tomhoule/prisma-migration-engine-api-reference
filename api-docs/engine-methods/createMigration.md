@@ -12,6 +12,7 @@ command to work (because of the shadow database).
 
 Name: createMigrationInput
 
+
 - draft: [Bool](../shapes/Bool.md)
 
   If true, always generate a migration, but do not apply.
@@ -35,6 +36,7 @@ Name: createMigrationInput
 ## Response shape
 
 Name: createMigrationOutput
+
 
 - generatedMigrationName: [String](../shapes/String.md)
 

@@ -31,7 +31,7 @@ fn generate_engine_method_docs(out_dir: &Path, api: &Api) -> CrateResult {
 
         writeln!(
             md_contents,
-            "## Request shape\n\nName: {input_type}\n",
+            "## Request shape\n\nName: {input_type}\n\n",
             input_type = method.request_shape,
         )?;
 
@@ -41,7 +41,7 @@ fn generate_engine_method_docs(out_dir: &Path, api: &Api) -> CrateResult {
 
         writeln!(
             md_contents,
-            "## Response shape\n\nName: {output_type}\n",
+            "## Response shape\n\nName: {output_type}\n\n",
             output_type = method.response_shape,
         )?;
 
@@ -65,7 +65,7 @@ fn generate_shape_docs(out_dir: &Path, api: &Api) -> CrateResult {
     let mut file_name = String::with_capacity(50);
 
     for (record_name, record_shape) in &api.record_shapes {
-        writeln!(md_contents, "# {record_name}", record_name = record_name)?;
+        writeln!(md_contents, "# {record_name}\n", record_name = record_name)?;
         render_record_fields(&record_shape, &mut md_contents)?;
 
         let mut file_path = out_dir.join(record_name);
@@ -96,6 +96,10 @@ fn generate_shape_docs(out_dir: &Path, api: &Api) -> CrateResult {
 }
 
 fn render_record_fields(shape: &RecordShape, md_contents: &mut String) -> CrateResult {
+    if shape.fields.is_empty() {
+        md_contents.push_str("_This record shape has no fields._\n");
+    }
+
     for (field_name, field) in &shape.fields {
         writeln!(
             md_contents,

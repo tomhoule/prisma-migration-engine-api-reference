@@ -12,6 +12,7 @@ output, and translate it to a concrete action to be performed by the CLI.
 
 Name: devDiagnosticInput
 
+
 - migrationsDirectoryPath: [String](../shapes/String.md)
 
 
@@ -19,6 +20,7 @@ Name: devDiagnosticInput
 ## Response shape
 
 Name: devDiagnosticOutput
+
 
 - action: [devAction](../shapes/devAction.md)
 

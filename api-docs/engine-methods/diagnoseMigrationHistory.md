@@ -11,6 +11,7 @@ directory, nor does it use a shadow database.
 
 Name: diagnoseMigrationHistoryInput
 
+
 - migrationsDirectoryPath: [String](../shapes/String.md)
 
   The path to the root of the migrations directory.
@@ -19,6 +20,7 @@ Name: diagnoseMigrationHistoryInput
 ## Response shape
 
 Name: diagnoseMigrationHistoryOutput
+
 
 - editedMigrationNames: [String](../shapes/String.md)
 

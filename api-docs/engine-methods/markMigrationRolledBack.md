@@ -9,6 +9,7 @@ there, but ignored for all purposes except as audit trail.
 
 Name: markMigrationRolledBackInput
 
+
 - migrationName: [String](../shapes/String.md)
 
   The name of the migration to mark applied.
@@ -18,3 +19,5 @@ Name: markMigrationRolledBackInput
 
 Name: markMigrationRolledBackOutput
 
+
+_This record shape has no fields._

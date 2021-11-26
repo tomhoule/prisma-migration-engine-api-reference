@@ -10,6 +10,7 @@ This is the command behind `prisma migrate deploy`.
 
 Name: applyMigrationsInput
 
+
 - migrationsDirectoryPath: [String](../shapes/String.md)
 
 
@@ -17,6 +18,7 @@ Name: applyMigrationsInput
 ## Response shape
 
 Name: applyMigrationsOutput
+
 
 - appliedMigrationNames: [String](../shapes/String.md)
 

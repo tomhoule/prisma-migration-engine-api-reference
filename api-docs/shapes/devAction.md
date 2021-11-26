@@ -2,7 +2,7 @@
 
 
 
-- Variant __Reset__: [devActionReset](../devActionReset.md)
+- Variant __Reset__: [devActionReset](../shapes/devActionReset.md)
 
 
 

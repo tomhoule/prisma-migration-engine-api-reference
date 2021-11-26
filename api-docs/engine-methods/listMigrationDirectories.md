@@ -8,6 +8,7 @@ List the names of the migrations in the migrations directory.
 
 Name: listMigrationDirectoriesInput
 
+
 - migrationsDirectoryPath: [String](../shapes/String.md)
 
 
@@ -15,6 +16,7 @@ Name: listMigrationDirectoriesInput
 ## Response shape
 
 Name: listMigrationDirectoriesOutput
+
 
 - migrations: [String](../shapes/String.md)
 

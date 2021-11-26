@@ -1,4 +1,5 @@
 # createMigrationInput
+
 - draft: [Bool](../shapes/Bool.md)
 
   If true, always generate a migration, but do not apply.

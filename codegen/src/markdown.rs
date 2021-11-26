@@ -140,7 +140,7 @@ fn render_enum_variants(variants: &crate::EnumShape, md_contents: &mut String) -
                     variant_name,
                     "__: [",
                     &shape,
-                    "](../",
+                    "](../shapes/",
                     &shape,
                     ".md)\n\n",
                     &description,

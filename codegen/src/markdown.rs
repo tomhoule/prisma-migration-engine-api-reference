@@ -149,7 +149,7 @@ fn render_enum_variants(variants: &crate::EnumShape, md_contents: &mut String) -
                 .iter()
                 .for_each(|fragment| md_contents.push_str(fragment))
             }
-            None => ["- Variant __", variant_name, "__: <no data>\n\n"]
+            None => ["- Variant __", variant_name, "__: &lt;no data&gt;\n\n"]
                 .iter()
                 .for_each(|fragment| md_contents.push_str(fragment)),
         }

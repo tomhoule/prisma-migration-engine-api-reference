@@ -6,5 +6,5 @@
 
 
 
-- Variant __CreateMigration__: <no data>
+- Variant __CreateMigration__: &lt;no data&gt;
 

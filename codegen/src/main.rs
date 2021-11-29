@@ -9,19 +9,21 @@ use std::{
     path::Path,
 };
 
-fn main() {
+fn main() -> CrateResult {
     let out_dir = std::env::var("out").expect("Expected the $out env var to be defined");
     let api_json = std::env::var("API_JSON").expect("Expected $API_JSON env var to be defined");
 
-    let api: Api = serde_json::from_str(&api_json).unwrap();
+    let api: Api = serde_json::from_str(&api_json)?;
 
     let out_dir = Path::new(&out_dir);
-    let rust_crate_out_dir = out_dir.join("prism-migration-engine-api-rs");
+    let rust_crate_out_dir = out_dir.join("prisma-migration-engine-api-rs");
     let md_docs_out_dir = out_dir.join("md_docs");
-    std::fs::create_dir(&rust_crate_out_dir).unwrap();
-    std::fs::create_dir(&md_docs_out_dir).unwrap();
-    rust_crate::generate_rust_crate(&rust_crate_out_dir, &api);
-    markdown::generate_md_docs(&md_docs_out_dir, &api).unwrap();
+    std::fs::create_dir(&rust_crate_out_dir)?;
+    std::fs::create_dir(&md_docs_out_dir)?;
+    rust_crate::generate_rust_crate(&rust_crate_out_dir, &api)?;
+    markdown::generate_md_docs(&md_docs_out_dir, &api)?;
+
+    Ok(())
 }
 
 #[derive(Debug, Deserialize)]

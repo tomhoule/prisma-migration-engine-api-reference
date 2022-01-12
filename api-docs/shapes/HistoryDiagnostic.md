@@ -8,7 +8,7 @@ database migration history in relation to the migrations directory.
 
   There are migrations in the migrations directory that have not been  applied to the database yet.
 
-- Variant __MigrationsDirectoryIsBehind__: &lt;no data&gt;
-
 - Variant __HistoriesDiverge__: &lt;no data&gt;
+
+- Variant __MigrationsDirectoryIsBehind__: &lt;no data&gt;
 

@@ -6,4 +6,4 @@ responseShape = "getDatabaseVersionOutput"
 [recordShapes.getDatabaseVersionInput]
 
 [recordShapes.getDatabaseVersionOutput.fields.version]
-shape = "String"
+shape = "string"

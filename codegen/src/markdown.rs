@@ -1,5 +1,5 @@
 use super::{Api, RecordShape};
-use crate::{CrateResult};
+use crate::CrateResult;
 use std::{fmt::Write as _, fs::File, io::Write as _, path::Path};
 
 pub(crate) fn generate_md_docs(out_dir: &Path, api: &Api) -> CrateResult {

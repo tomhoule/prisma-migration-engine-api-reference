@@ -56,3 +56,4 @@ the database yet.
 """
 shape = "DatabaseIsBehindFields"
 
+[recordShapes.DatabaseIsBehindFields]

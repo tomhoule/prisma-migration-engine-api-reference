@@ -1,0 +1,11 @@
+[methods.applyMigrations]
+description = "Apply the migrations from the migrations directory to the database.\n\nThis is the command behind `prisma migrate deploy`.\n"
+requestShape = "applyMigrationsInput"
+responseShape = "applyMigrationsOutput"
+
+[recordShapes.applyMigrationsInput]
+fields.migrationsDirectoryPath = { shape = "string" }
+
+[recordShapes.applyMigrationsOutput.fields.appliedMigrationNames]
+isList = true
+shape = "string"

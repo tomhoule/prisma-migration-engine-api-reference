@@ -42,7 +42,7 @@
         };
       };
 
-      devShell = pkgs.mkShell { buildInputs = with pkgs; [ clang ]; };
+      devShell = pkgs.mkShell { buildInputs = with pkgs; [ dasel clang ]; };
 
       apps = {
         publishMdDocs = pkgs.writeShellScriptBin "publishMdDocs" ''

@@ -1,6 +1,6 @@
 use super::{Api, RecordShape};
 use crate::CrateResult;
-use std::{borrow::Cow, fmt::Write as _, fs::File, io::Write as _, path::Path};
+use std::{fmt::Write as _, fs::File, io::Write as _, path::Path};
 
 pub(crate) fn generate_md_docs(out_dir: &Path, api: &Api) -> CrateResult {
     let engine_methods_out_dir = out_dir.join("engine-methods");
@@ -128,34 +128,40 @@ fn render_enum_variants(variants: &crate::EnumShape, md_contents: &mut String) -
     }
 
     for (variant_name, variant) in &variants.variants {
-        match variant {
-            Some(crate::EnumVariant { description, shape }) => {
-                let description = description
-                    .as_ref()
-                    .map(|desc| {
-                        desc.lines()
-                            .map(|line| format!("  {}", line))
-                            .collect::<String>()
-                    })
-                    .unwrap_or("".into());
+        let description = variant
+            .description
+            .as_ref()
+            .map(|desc| {
+                desc.lines()
+                    .map(|line| format!("  {}", line))
+                    .collect::<String>()
+            })
+            .unwrap_or("".into());
 
-                [
-                    "- Variant __",
-                    variant_name,
-                    "__: [",
-                    &shape,
-                    "](../shapes/",
-                    &shape,
-                    ".md)\n\n",
-                    &description,
-                    "\n\n",
-                ]
-                .iter()
-                .for_each(|fragment| md_contents.push_str(fragment))
-            }
-            None => ["- Variant __", variant_name, "__: &lt;no data&gt;\n\n"]
-                .iter()
-                .for_each(|fragment| md_contents.push_str(fragment)),
+        if let Some(shape) = &variant.shape {
+            [
+                "- Variant __",
+                variant_name,
+                "__: [",
+                &shape,
+                "](../shapes/",
+                &shape,
+                ".md)\n\n",
+                &description,
+                "\n\n",
+            ]
+            .iter()
+            .for_each(|fragment| md_contents.push_str(fragment))
+        } else {
+            [
+                "- Variant __",
+                variant_name,
+                "__: &lt;no data&gt;\n\n",
+                &description,
+                "\n\n",
+            ]
+            .iter()
+            .for_each(|fragment| md_contents.push_str(fragment))
         }
     }
 

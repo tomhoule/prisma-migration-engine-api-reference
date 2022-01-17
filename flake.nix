@@ -7,29 +7,25 @@
     let
       pkgs = import nixpkgs { inherit system; };
       lib = pkgs.lib;
-
-      methods = builtins.map
-        (fileName: ./. + "/methods/${fileName}")
-        (builtins.attrNames (builtins.readDir ./methods));
-
-      api = lib.evalModules {
-        modules = [ ./schema.nix ] ++ methods;
-      };
+      iterate = pkgs.writeShellScriptBin "iterate" ''
+        set -euxo pipefail;
+        export out=./iterate-out 
+        rm -rf $out;
+        mkdir $out;
+        cat ./methods/*.toml | dasel -r toml -w json . > $out/api.json;
+        out=./iterate-out cargo run --manifest-path=./codegen/Cargo.toml;
+      '';
     in
     {
-      defaultPackage = derivation {
+      defaultPackage = pkgs.stdenv.mkDerivation {
         name = "prisma-migration-engine-api";
-        builder = "${pkgs.bash}/bin/bash";
-        args = [ ./builder.sh ];
-        system = system;
-
-        src = ./.;
-
-        API_JSON = builtins.toJSON api.config;
-        PATH = builtins.foldl'
-          (acc: pkg: acc + ":${pkg}/bin")
-          ""
-          [ pkgs.coreutils pkgs.jq pkgs.shab self.packages."${system}".codegen ];
+        buildPhase = "bash ./builder.sh";
+        installPhase = "echo pewpew";
+        buildInputs = [
+          self.packages."${system}".codegen
+          pkgs.dasel
+        ];
+        src = builtins.path { path = ./.; name = "src"; };
       };
 
       packages = {
@@ -42,7 +38,13 @@
         };
       };
 
-      devShell = pkgs.mkShell { buildInputs = with pkgs; [ clang ]; };
+      devShell = pkgs.mkShell {
+        inputsFrom = [
+          self.defaultPackage."${system}"
+          self.packages."${system}".codegen
+        ];
+        packages = [ iterate self.apps."${system}".publishMdDocs ];
+      };
 
       apps = {
         publishMdDocs = pkgs.writeShellScriptBin "publishMdDocs" ''

@@ -1,13 +1,17 @@
 use super::{Api, RecordShape};
-use crate::CrateResult;
-use std::{borrow::Cow, fmt::Write as _, fs::File, io::Write as _, path::Path};
+use crate::{CrateResult, Error};
+use std::{fmt::Write as _, fs::File, io::Write as _, path::Path};
 
 pub(crate) fn generate_md_docs(out_dir: &Path, api: &Api) -> CrateResult {
     let engine_methods_out_dir = out_dir.join("engine-methods");
-    std::fs::create_dir(&engine_methods_out_dir)?;
+    std::fs::create_dir(&engine_methods_out_dir).map_err(|err| {
+        Error::new_file_io(err, engine_methods_out_dir.to_string_lossy().into_owned())
+    })?;
     generate_engine_method_docs(&engine_methods_out_dir, api)?;
     let shapes_out_dir = out_dir.join("shapes");
-    std::fs::create_dir(&shapes_out_dir)?;
+    std::fs::create_dir(&shapes_out_dir).map_err(|err| {
+        Error::new_file_io(err, engine_methods_out_dir.to_string_lossy().into_owned())
+    })?;
     generate_shape_docs(&shapes_out_dir, api)
 }
 
@@ -27,13 +31,15 @@ fn generate_engine_method_docs(out_dir: &Path, api: &Api) -> CrateResult {
             "# {method_name}\n\n{description}\n\n",
             method_name = method_name,
             description = description,
-        )?;
+        )
+        .map_err(Error::new_generic)?;
 
         writeln!(
             md_contents,
             "## Request shape\n\nName: {input_type}\n\n",
             input_type = method.request_shape,
-        )?;
+        )
+        .map_err(Error::new_generic)?;
 
         let input_shape = &api.record_shapes[&method.request_shape];
 
@@ -43,7 +49,8 @@ fn generate_engine_method_docs(out_dir: &Path, api: &Api) -> CrateResult {
             md_contents,
             "## Response shape\n\nName: {output_type}\n\n",
             output_type = method.response_shape,
-        )?;
+        )
+        .map_err(Error::new_generic)?;
 
         let output_shape = &api.record_shapes[&method.response_shape];
 
@@ -51,8 +58,9 @@ fn generate_engine_method_docs(out_dir: &Path, api: &Api) -> CrateResult {
 
         file_name.push_str(method_name);
         file_name.push_str(".md");
-        let mut file = File::create(out_dir.join(&file_name))?;
-        file.write_all(md_contents.as_bytes())?;
+        let mut file = File::create(out_dir.join(&file_name)).map_err(Error::new_generic)?;
+        file.write_all(md_contents.as_bytes())
+            .map_err(Error::new_generic)?;
         md_contents.clear();
         file_name.clear();
     }
@@ -65,13 +73,15 @@ fn generate_shape_docs(out_dir: &Path, api: &Api) -> CrateResult {
     let mut file_name = String::with_capacity(50);
 
     for (record_name, record_shape) in &api.record_shapes {
-        writeln!(md_contents, "# {record_name}\n", record_name = record_name)?;
+        writeln!(md_contents, "# {record_name}\n", record_name = record_name)
+            .map_err(Error::new_generic)?;
         render_record_fields(&record_shape, &mut md_contents)?;
 
         let mut file_path = out_dir.join(record_name);
         file_path.set_extension("md");
-        let mut file = File::create(&file_path)?;
-        file.write_all(md_contents.as_bytes())?;
+        let mut file = File::create(&file_path).map_err(Error::new_generic)?;
+        file.write_all(md_contents.as_bytes())
+            .map_err(Error::new_generic)?;
         file_name.clear();
         md_contents.clear();
     }
@@ -85,8 +95,9 @@ fn generate_shape_docs(out_dir: &Path, api: &Api) -> CrateResult {
 
         let mut file_path = out_dir.join(enum_name);
         file_path.set_extension("md");
-        let mut file = File::create(&file_path)?;
-        file.write_all(md_contents.as_bytes())?;
+        let mut file = File::create(&file_path).map_err(Error::new_generic)?;
+        file.write_all(md_contents.as_bytes())
+            .map_err(Error::new_generic)?;
 
         file_name.clear();
         md_contents.clear();
@@ -105,7 +116,8 @@ fn render_record_fields(shape: &RecordShape, md_contents: &mut String) -> CrateR
             md_contents,
             "- {}: [{}](../shapes/{}.md)\n",
             field_name, field.shape, field.shape
-        )?;
+        )
+        .map_err(Error::new_generic)?;
 
         if let Some(description) = &field.description {
             for line in description.lines() {

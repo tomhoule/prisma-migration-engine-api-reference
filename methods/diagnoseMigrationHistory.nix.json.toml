@@ -22,8 +22,9 @@ fields.editedMigrationNames.isList = true
 fields.editedMigrationNames.shape = "string"
 
 [recordShapes.diagnoseMigrationHistoryOutput.fields.failedMigrationNames]
-description =  "The names of the migrations that are currently in a failed state in
-the migrations table."
+description =  """
+The names of the migrations that are currently in a failed state in the migrations table.
+"""
 isList = true
 shape = "string"
 

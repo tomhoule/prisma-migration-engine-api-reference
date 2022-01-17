@@ -10,7 +10,6 @@ This is part of the `migrate dev` flow.
 
 **Note**: the engine currently assumes the main database schema is up-to-date
 with the migration history.
-
 """
 requestShape = "evaluateDataLossInput"
 responseShape = "evaluateDataLossOutput"
@@ -29,9 +28,10 @@ passed.
 shape = "u32"
 
 [recordShapes.evaluateDataLossOutput.fields.unexecutable]
-description = "Steps that cannot be executed on the local database in the
+description = """
+Steps that cannot be executed on the local database in the
 migration that would be generated.
-"
+"""
 isList = true
 shape = "migrationFeedback"
 

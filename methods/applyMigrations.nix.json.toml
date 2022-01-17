@@ -1,5 +1,9 @@
 [methods.applyMigrations]
-description = "Apply the migrations from the migrations directory to the database.\n\nThis is the command behind `prisma migrate deploy`.\n"
+description = """
+Apply the migrations from the migrations directory to the database.
+
+This is the command behind `prisma migrate deploy`.
+"""
 requestShape = "applyMigrationsInput"
 responseShape = "applyMigrationsOutput"
 

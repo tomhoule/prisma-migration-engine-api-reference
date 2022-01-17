@@ -1,6 +1,7 @@
-mkdir -p $out
-echo $API_JSON | jq > $out/api.json
+source $stdenv/setup
 
-export API_JSON=`echo $API_JSON | jq`
+mkdir -p $out
+
+cat ./methods/*.toml | dasel -r toml -w json . > $out/api.json;
 
 codegen

@@ -1,23 +1,30 @@
-use std::{error::Error as StdError, fmt::Debug, panic::Location};
+use backtrace::Backtrace;
+use std::{error::Error as StdError, fmt::Debug, io};
 
 pub(crate) type CrateResult = Result<(), Error>;
 
 pub(crate) struct Error {
     source: Option<Box<dyn StdError>>,
-    origin: &'static Location<'static>,
+    bt: Backtrace,
     message: Option<String>,
 }
 
-impl<T> From<T> for Error
-where
-    T: StdError + 'static,
-{
+impl Error {
     #[track_caller]
-    fn from(err: T) -> Self {
+    pub(crate) fn new_file_io(src: io::Error, filename: String) -> Self {
         Error {
-            message: Some(err.to_string()),
-            source: Some(Box::new(err)),
-            origin: Location::caller(),
+            message: Some(filename),
+            source: Some(Box::new(src)),
+            bt: Backtrace::new(),
+        }
+    }
+
+    #[track_caller]
+    pub(crate) fn new_generic(src: impl std::error::Error + 'static) -> Self {
+        Error {
+            message: Some(src.to_string()),
+            source: Some(Box::new(src)),
+            bt: Backtrace::new(),
         }
     }
 }
@@ -28,7 +35,6 @@ impl Debug for Error {
         let mut indentation_levels = 0;
 
         if let Some(message) = &self.message {
-            f.write_fmt(format_args!("{:?}", self.origin))?;
             f.write_str(message)?;
         }
 
@@ -39,12 +45,12 @@ impl Debug for Error {
                 f.write_str("  ")?;
             }
 
-            f.write_fmt(format_args!("Caused by: {:?}", source))?;
+            f.write_fmt(format_args!("Caused by: {}\n", source))?;
 
             indentation_levels += 1;
             src = source.source();
         }
 
-        Ok(())
+        f.write_fmt(format_args!("{:?}\n", self.bt))
     }
 }

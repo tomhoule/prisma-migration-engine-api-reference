@@ -1,6 +1,9 @@
 
 [methods.dbExecute]
-description = "Execute a database script directly on the specified live database.\n\nNote that this may not be defined on all connectors.\n"
+description = """
+Execute a database script directly on the specified live database.\n\nNote that this may not be
+defined on all connectors.
+"""
 requestShape = "dbExecuteInput"
 responseShape = "dbExecuteOutput"
 
@@ -9,7 +12,6 @@ fields.datasourceType.shape = "dbExecuteDatasourceType"
 fields.inputType.shape = "dbExecuteInputType"
 
 [recordShapes.dbExecuteOutput]
-fields = []
 
 [enumShapes.dbExecuteDatasourceType]
 description = "The location of the live database to connect to in dbExecute."

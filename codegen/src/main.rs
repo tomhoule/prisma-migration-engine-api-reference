@@ -11,10 +11,28 @@ use std::{
 
 fn main() -> CrateResult {
     let out_dir = std::env::var("out").expect("Expected the $out env var to be defined");
-    let api_json_path = std::path::Path::new(&out_dir).join("api.json");
-    let api_json = std::fs::read_to_string(api_json_path)?;
+    let api_defs_root = match std::env::var("METHODS_DIR") {
+        Ok(dir) => dir,
+        _ => concat!(env!("CARGO_MANIFEST_DIR"), "/../methods").to_owned(),
+    };
+    let entries = std::fs::read_dir(api_defs_root)?;
+    let mut api = Api::default();
 
-    let api: Api = serde_json::from_str(&api_json)?;
+    for entry in entries {
+        let entry = entry?;
+        if !entry.file_type()?.is_file() {
+            continue;
+        }
+        let contents = std::fs::read_to_string(entry.path())?;
+        eprintln!(
+            "Merging {}",
+            entry.path().file_name().unwrap().to_string_lossy()
+        );
+        let api_fragment: Api = toml::from_str(&contents)?;
+
+        merge(&mut api, api_fragment);
+    }
+
     validate(&api);
 
     let out_dir = Path::new(&out_dir);
@@ -93,14 +111,29 @@ fn shape_exists(shape: &str, api: &Api) -> bool {
     return false;
 }
 
+fn merge(api: &mut Api, new_fragment: Api) {
+    for (method_name, method) in new_fragment.methods {
+        assert!(api.methods.insert(method_name, method).is_none());
+    }
+
+    for (record_name, record) in new_fragment.record_shapes {
+        assert!(api.record_shapes.insert(record_name, record).is_none());
+    }
+
+    for (enum_name, enum_d) in new_fragment.enum_shapes {
+        assert!(api.enum_shapes.insert(enum_name, enum_d).is_none());
+    }
+}
+
 // Make sure #[serde(deny_unknown_fields)] is on all struct types here.
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Default)]
 #[serde(deny_unknown_fields)]
 struct Api {
-    #[serde(rename = "recordShapes")]
+    #[serde(rename = "recordShapes", default)]
     record_shapes: HashMap<String, RecordShape>,
-    #[serde(rename = "enumShapes")]
+    #[serde(rename = "enumShapes", default)]
     enum_shapes: HashMap<String, EnumShape>,
+    #[serde(default)]
     methods: HashMap<String, Method>,
 }
 

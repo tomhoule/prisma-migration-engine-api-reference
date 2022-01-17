@@ -12,8 +12,7 @@
         export out=./iterate-out 
         rm -rf $out;
         mkdir $out;
-        cat ./methods/*.toml | dasel -r toml -w json . > $out/api.json;
-        out=./iterate-out cargo run --manifest-path=./codegen/Cargo.toml;
+        METHODS_DIR=methods out=./iterate-out cargo run --manifest-path=./codegen/Cargo.toml;
       '';
     in
     {
@@ -23,7 +22,6 @@
         installPhase = "echo pewpew";
         buildInputs = [
           self.packages."${system}".codegen
-          pkgs.dasel
         ];
         src = builtins.path { path = ./.; name = "src"; };
       };

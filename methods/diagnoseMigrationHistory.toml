@@ -12,14 +12,14 @@ responseShape = "diagnoseMigrationHistoryOutput"
 fields.migrationsDirectoryPath.description = "The path to the root of the migrations directory."
 fields.migrationsDirectoryPath.shape = "string"
 
-[recordShapes.diagnoseMigrationHistoryOutput]
-fields.editedMigrationNames.description = """
+[recordShapes.diagnoseMigrationHistoryOutput.fields.editedMigrationNames]
+description = """
 The names of the migrations for which the checksum of the script in the
 migration directory does not match the checksum of the applied migration
 in the database.
 """
-fields.editedMigrationNames.isList = true
-fields.editedMigrationNames.shape = "string"
+isList = true
+shape = "string"
 
 [recordShapes.diagnoseMigrationHistoryOutput.fields.failedMigrationNames]
 description =  """
@@ -46,8 +46,9 @@ description = """
 A diagnostic returned by `diagnoseMigrationHistory` when looking at the
 database migration history in relation to the migrations directory.
 """
-variants.MigrationsDirectoryIsBehind = {}
-variants.HistoriesDiverge = {}
+
+[enumShapes.HistoryDiagnostic.variants.MigrationsDirectoryIsBehind]
+[enumShapes.HistoryDiagnostic.variants.HistoriesDiverge]
 
 [enumShapes.HistoryDiagnostic.variants.DatabaseIsBehind]
 description = """

@@ -18,11 +18,10 @@
     {
       defaultPackage = pkgs.stdenv.mkDerivation {
         name = "prisma-migration-engine-api";
-        buildPhase = "bash ./builder.sh";
+        configurePhase = "mkdir $out";
+        buildPhase = "METHODS_DIR=methods codegen";
         installPhase = "echo pewpew";
-        buildInputs = [
-          self.packages."${system}".codegen
-        ];
+        buildInputs = [ self.packages."${system}".codegen ];
         src = builtins.path { path = ./.; name = "src"; };
       };
 
@@ -37,10 +36,7 @@
       };
 
       devShell = pkgs.mkShell {
-        inputsFrom = [
-          self.defaultPackage."${system}"
-          self.packages."${system}".codegen
-        ];
+        inputsFrom = [ self.packages."${system}".codegen ];
         packages = [ iterate ];
       };
 

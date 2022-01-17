@@ -127,7 +127,7 @@ struct RecordField {
 #[serde(deny_unknown_fields)]
 struct EnumVariant {
     description: Option<String>,
-    /// In cas there is no shape, it just means the variant has no associated data.
+    /// In case there is no shape, it just means the variant has no associated data.
     shape: Option<String>,
 }
 

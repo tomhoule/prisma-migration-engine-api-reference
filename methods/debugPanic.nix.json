@@ -1,1 +1,0 @@
-{"methods":{"debugPanic":{"description":"Make the migration engine panic. Only useful to test client error handling.\n","requestShape":"debugPanicInput","responseShape":"debugPanicOutput"}},"recordShapes":{"debugPanicInput":{"fields":{}},"debugPanicOutput":{"fields":{}}}}

@@ -56,7 +56,7 @@ fn validate(api: &Api) {
 
     for (enum_name, enum_shape) in &api.enum_shapes {
         for (variant_name, variant) in &enum_shape.variants {
-            if let Some(shape) = variant.as_ref().and_then(|v| v.shape.as_ref()) {
+            if let Some(shape) = variant.shape.as_ref() {
                 if !shape_exists(shape, api) {
                     errs.push(format!(
                         "Enum variant shape for {}.{} does not exist.",
@@ -135,7 +135,7 @@ struct EnumVariant {
 #[serde(deny_unknown_fields)]
 struct EnumShape {
     description: Option<String>,
-    variants: HashMap<String, Option<EnumVariant>>,
+    variants: HashMap<String, EnumVariant>,
 }
 
 #[derive(Debug, Deserialize)]

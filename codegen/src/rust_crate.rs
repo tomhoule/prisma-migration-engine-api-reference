@@ -82,30 +82,23 @@ fn generate_typesrs(src_dir: &Path, api: &Api) -> CrateResult {
             rustify_type_name(type_name)
         )?;
 
-        for (variant_name, variant_type) in &variants.variants {
-            match variant_type {
-                Some(variant) => {
-                    if let Some(description) = &variant.description {
-                        for line in description.lines() {
-                            writeln!(typesrs, "    /// {}", line)?;
-                        }
-
-                        if let Some(shape) = &variant.shape {
-                            writeln!(
-                                typesrs,
-                                "    {}({}),",
-                                variant_name,
-                                rustify_type_name(shape)
-                            )?;
-                        } else {
-                            writeln!(typesrs, "    {}", variant_name)?;
-                        }
-                    }
+        for (variant_name, variant) in &variants.variants {
+            if let Some(description) = &variant.description {
+                for line in description.lines() {
+                    writeln!(typesrs, "    /// {}", line)?;
                 }
-                None => {
+
+                if let Some(shape) = &variant.shape {
+                    writeln!(
+                        typesrs,
+                        "    {}({}),",
+                        variant_name,
+                        rustify_type_name(shape)
+                    )?;
+                } else {
                     writeln!(typesrs, "    {},", variant_name)?;
                 }
-            };
+            }
         }
 
         writeln!(typesrs, "}}\n")?;

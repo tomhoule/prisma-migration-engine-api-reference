@@ -1,5 +1,5 @@
 use backtrace::Backtrace;
-use std::{error::Error as StdError, fmt::Debug, io};
+use std::{error::Error as StdError, fmt::Debug};
 
 pub(crate) type CrateResult = Result<(), Error>;
 
@@ -9,18 +9,11 @@ pub(crate) struct Error {
     message: Option<String>,
 }
 
-impl Error {
-    #[track_caller]
-    pub(crate) fn new_file_io(src: io::Error, filename: String) -> Self {
-        Error {
-            message: Some(filename),
-            source: Some(Box::new(src)),
-            bt: Backtrace::new(),
-        }
-    }
-
-    #[track_caller]
-    pub(crate) fn new_generic(src: impl std::error::Error + 'static) -> Self {
+impl<T> From<T> for Error
+where
+    T: std::error::Error + 'static,
+{
+    fn from(src: T) -> Self {
         Error {
             message: Some(src.to_string()),
             source: Some(Box::new(src)),

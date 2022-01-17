@@ -2,7 +2,7 @@ mod error;
 mod markdown;
 mod rust_crate;
 
-use error::{CrateResult, Error};
+use error::CrateResult;
 use serde::Deserialize;
 use std::{
     collections::{BTreeMap, HashMap},
@@ -12,16 +12,15 @@ use std::{
 fn main() -> CrateResult {
     let out_dir = std::env::var("out").expect("Expected the $out env var to be defined");
     let api_json_path = std::path::Path::new(&out_dir).join("api.json");
-    let api_json =
-        std::fs::read_to_string(api_json_path).map_err(|err| Error::new_file_io(err, out_dir.clone()))?;
+    let api_json = std::fs::read_to_string(api_json_path)?;
 
-    let api: Api = serde_json::from_str(&api_json).map_err(Error::new_generic)?;
+    let api: Api = serde_json::from_str(&api_json)?;
 
     let out_dir = Path::new(&out_dir);
     let rust_crate_out_dir = out_dir.join("prisma-migration-engine-api-rs");
     let md_docs_out_dir = out_dir.join("md_docs");
-    std::fs::create_dir(&rust_crate_out_dir).map_err(Error::new_generic)?;
-    std::fs::create_dir(&md_docs_out_dir).map_err(Error::new_generic)?;
+    std::fs::create_dir(&rust_crate_out_dir)?;
+    std::fs::create_dir(&md_docs_out_dir)?;
     rust_crate::generate_rust_crate(&rust_crate_out_dir, &api)?;
     markdown::generate_md_docs(&md_docs_out_dir, &api)?;
 
@@ -57,7 +56,8 @@ struct RecordField {
 #[derive(Debug, Deserialize)]
 struct EnumVariant {
     description: Option<String>,
-    shape: String,
+    /// In cas there is no shape, it just means the variant has no associated data.
+    shape: Option<String>,
 }
 
 #[derive(Debug, Deserialize)]

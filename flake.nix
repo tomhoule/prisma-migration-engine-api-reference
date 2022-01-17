@@ -20,6 +20,7 @@
       defaultPackage = pkgs.stdenv.mkDerivation {
         name = "prisma-migration-engine-api";
         buildPhase = "bash ./builder.sh";
+        installPhase = "echo pewpew";
         buildInputs = [
           self.packages."${system}".codegen
           pkgs.dasel
@@ -42,7 +43,7 @@
           self.defaultPackage."${system}"
           self.packages."${system}".codegen
         ];
-        packages = [ iterate ];
+        packages = [ iterate self.apps."${system}".publishMdDocs ];
       };
 
       apps = {
